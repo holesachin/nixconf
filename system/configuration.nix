@@ -106,6 +106,7 @@
     wget
     aria2
     lf
+    brightnessctl
     
     git
     unzip

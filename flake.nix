@@ -18,7 +18,7 @@
     nixosConfigurations = {
       nixos = lib.nixosSystem {
         inherit system;
-        modules = [ ./configuration.nix ];
+        modules = [ ./system/configuration.nix ];
       };
     };
 
@@ -26,7 +26,7 @@
     homeConfigurations = {
        sachin = home-manager.lib.homeManagerConfiguration {
          inherit pkgs;
-         modules = [ ./home.nix ];
+         modules = [ ./user/home.nix ];
       };
     };
   };
