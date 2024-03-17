@@ -28,6 +28,7 @@
   # plain files is through 'home.file'.
   home.file = {
    ".bashrc".source = ./bash/bashrc;
+   ".zshrc".source = ./zsh/zshrc;
    
    ".config/nvim" = {
      source = ./nvim;
@@ -37,6 +38,52 @@
     # kitty
    ".config/kitty" = {
      source = ./kitty;
+     recursive = true;
+   };
+
+   # alacritty
+   ".config/alacritty" = {
+     source = ./alacritty;
+     recursive = true;
+   };
+
+    ".config/bspwm" = {
+     source = ./bspwm;
+     recursive = true;
+   };
+
+   ".config/foot" = {
+     source = ./foot;
+     recursive = true;
+   };
+
+   ".config/lf" = {
+     source = ./lf;
+     recursive = true;
+   };
+
+   ".config/mako" = {
+     source = ./mako;
+     recursive = true;
+   };
+
+   ".config/mpd" = {
+     source = ./mpd;
+     recursive = true;
+   };
+
+   ".config/mpv" = {
+     source = ./mpv;
+     recursive = true;
+   };
+
+   ".config/ncmpcpp" = {
+     source = ./ncmpcpp;
+     recursive = true;
+   };
+
+   ".config/rofi" = {
+     source = ./rofi;
      recursive = true;
    };
 
@@ -56,6 +103,26 @@
    ".config/waybar" = {
     source = ./waybar;
     recursive = true;
+   };
+
+   ".config/shell" = {
+     source = ./shell;
+     recursive = true;
+   };
+
+   ".config/sxhkd" = {
+     source = ./sxhkd;
+     recursive = true;
+   };
+
+   ".config/sxiv" = {
+     source = ./sxiv;
+     recursive = true;
+   };
+
+   ".config/wayfire" = {
+     source = ./wayfire;
+     recursive = true;
    };
 
    # custome 'gtk' colors

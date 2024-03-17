@@ -70,6 +70,14 @@
   # FIXME: this is exporimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Wayfire
+  programs.wayfire.enable = true;
+  programs.wayfire.plugins = with pkgs.wayfirePlugins; [
+    wcm
+    wf-shell
+    wayfire-plugins-extra
+  ];
+
   # Hyprland
   programs.hyprland.enable = true;
   programs.dconf.enable = true;

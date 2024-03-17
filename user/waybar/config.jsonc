@@ -18,8 +18,13 @@
   "format-charging": " {capacity}%",
   "format-plugged": " {capacity}%",
   "format-alt": "{icon} {time}",
-  "format-icons": ["", "", "", "", "", "", ""]
+  "format-icons": ["", "", "", ""]
 },
+ "custom/logo": {
+        "format": "  ",
+        "tooltip": false,
+        "on-click": "rofi -show drun &"
+    },
 "hyprland/workspaces": {
   "on-click": "activate",
         "format": "{icon}",
@@ -68,7 +73,7 @@
 },
 "memory": {
     "interval": 30,
-    "format": " {used:0.2f}GB",
+    "format": "󰍛 {used:0.2f}GB",
     "max-length": 10,
     "tooltip": false,
     "warning": 70,
@@ -76,7 +81,8 @@
 },
 "network": {
   "interval": 2,
-  "format-wifi": " {signalStrength}%",
+  "format-wifi": "{icon} {signalStrength}%",
+  "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
   "format-ethernet": "",
   "format-linked": " {ipaddr}",
   "format-disconnected": " Disconnected",
@@ -96,7 +102,7 @@
 "backlight": {
     // "device": "acpi_video1",
     "format": "{icon} {percent}%",
-    "format-icons": ["", ""],
+    "format-icons": ["", ""],
     "on-scroll-down": "brightnessctl -c backlight set 1%-",
     "on-scroll-up": "brightnessctl -c backlight set +1%"
 },
