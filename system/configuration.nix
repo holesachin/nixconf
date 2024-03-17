@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./display-manager.nix
     ];
 
   # Bootloader.
@@ -15,6 +16,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
+  networking.nameservers = [
+    "8.8.8.8"
+    "1.1.1.1"
+  ];
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -67,6 +72,7 @@
 
   # Hyprland
   programs.hyprland.enable = true;
+  programs.dconf.enable = true;
  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -78,6 +84,8 @@
     mako
     xdg-utils 
     xdg-desktop-portal-hyprland
+    sddm-chili-theme
+    wl-clipboard
 
     # language and tools
     gcc
@@ -137,7 +145,9 @@
     fira-code-symbols
     lxappearance
     libsForQt5.qt5ct
-#    nwg-displays
+#    libsForQt5.qt5.qtquickcontrols2   
+#    libsForQt5.qt5.qtgraphicaleffects
+    nwg-displays
 #    nwg-look
     networkmanagerapplet
     usbutils
