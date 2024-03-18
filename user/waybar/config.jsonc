@@ -18,7 +18,7 @@
   "format-charging": " {capacity}%",
   "format-plugged": " {capacity}%",
   "format-alt": "{icon} {time}",
-  "format-icons": ["", "", "", ""]
+  "format-icons": [ " ", " ", " ", " ", " "]
 },
  "custom/logo": {
         "format": "  ",
@@ -29,7 +29,7 @@
   "on-click": "activate",
         "format": "{icon}",
         "format-icons": {
-            "default": "",
+            "default": "󰫤",
             "1": "1",
             "2": "2",
             "3": "3",
@@ -39,8 +39,8 @@
             "7": "7",
             "8": "8",
             "9": "9",
-            "active": "󱓻",
-            "urgent": "󱓻"
+            "active": "",
+            "urgent": "✶"
         },
         "persistent_workspaces": {
             "1": [],
@@ -69,7 +69,7 @@
 "cpu": {
     "format": " {usage}%",
     "tooltip": false,
-    "on-click": "kitty -e 'htop'"
+    "on-click": "kitty -e 'glances'"
 },
 "memory": {
     "interval": 30,
@@ -81,9 +81,9 @@
 },
 "network": {
   "interval": 2,
-  "format-wifi": "{icon} {signalStrength}%",
-  "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
-  "format-ethernet": "",
+  "format-wifi": "{icon}{signalStrength}%",
+  "format-icons": ["󰤯 ","󰤟 ","󰤢 ","󰤥 ","󰤨 "],
+  "format-ethernet": "󰛳",
   "format-linked": " {ipaddr}",
   "format-disconnected": " Disconnected",
   "format-disabled": "",
@@ -95,14 +95,14 @@
 "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-        "activated": "",
-        "deactivated": ""
+        "activated": " ",
+        "deactivated": " "
     }
 },
 "backlight": {
     // "device": "acpi_video1",
     "format": "{icon} {percent}%",
-    "format-icons": ["", ""],
+        "format-icons": ["", "󰃞", "󰃟", "󰃠", "🔆" ],
     "on-scroll-down": "brightnessctl -c backlight set 1%-",
     "on-scroll-up": "brightnessctl -c backlight set +1%"
 },

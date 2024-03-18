@@ -37,7 +37,7 @@ return {
       }
 
       local function footer()
-        return "No 1 one can Do it, ! can DO !T."
+        return "DO !T."
       end
 
       dashboard.section.footer.val = footer()
