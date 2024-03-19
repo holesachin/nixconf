@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+
+
+if [[ ${1} == "--clean" ]]; then
+	home-manager generations | tail -n +11 | cut -d' ' -f 5 | while read id; do 
+		home-manager remove-generations "${id}" ; 
+	done
+fi

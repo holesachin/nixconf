@@ -12,3 +12,6 @@ sudo nixos-rebuild switch --flake [directory name here] [ .#hostname ] # if host
 sudo home-manager switch --flake [directory name here] [ .#hostname ] # if hostname is diffrent from defined
 
 ```
+### Rofi Theme
+
+[collectiion of minmal themes](https://github.com/Murzchnvok/rofi-collection.git)

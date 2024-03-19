@@ -15,6 +15,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Networking
   networking.hostName = "nixos"; # Define your hostname.
   networking.nameservers = [
     "8.8.8.8"
@@ -80,7 +81,7 @@
 
   # Hyprland
   programs.hyprland.enable = true;
-  programs.dconf.enable = true;
+#  programs.dconf.enable = true;
  
   # List packages installed in system profile. To search, run:
   # $ nix search wget

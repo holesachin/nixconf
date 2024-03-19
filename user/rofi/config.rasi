@@ -1,4 +1,4 @@
-@theme "archlabs"
+@theme "./tokyonight/tokyonight"
 
 configuration {
 	modi: "drun,run,window,ssh";
