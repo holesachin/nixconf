@@ -5,9 +5,43 @@
 "margin-bottom":0,
 "margin-top":0,
 
-"modules-left": ["sway/mode","cpu","memory","network","mpd"],
-"modules-center": ["sway/workspaces","hyprland/workspaces"],
+"modules-left": ["sway/mode","cpu","custom/rhs","memory","network","mpd"],
+"modules-center": ["sway/workspaces","custom/search","hyprland/workspaces"],
 "modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","battery","clock"],
+
+
+"custom/rhs": {
+    "format": "",
+    "interval": "once",
+    "tooltip": false
+},
+"custom/lhs": {
+    "format": "",
+    "interval": "once",
+    "tooltip": false
+},
+
+/*
+#!/bin/bash
+COUNT=$(wc -l < ~/todo.txt)
+TODOS=$(cat ~/todo.txt | head -c -1 - | sed -z 's/\n/\\n/g')
+printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
+
+"custom/todo": {
+    "exec": "~/.config/waybar/scripts/todo.sh",
+    "return-type": "json",
+    "format": "{} todos",
+    "on-click": "wezterm -e nvim ~/todo.txt",
+    "interval": 5,
+},*/
+
+// ref: https://man.archlinux.org/man/extra/waybar/waybar-custom.5.en
+"custom/search": {
+    "format": " {} ",
+    "exec": "read -rp 'name: ' nn && echo $nn",
+    "return-type": "text",
+    "signal": 7
+},
 
 "battery": {
   "states": {

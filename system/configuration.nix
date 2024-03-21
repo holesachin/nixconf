@@ -93,8 +93,10 @@
     mako
     xdg-utils 
     xdg-desktop-portal-hyprland
+    lxde.lxsession
     sddm-chili-theme
     wl-clipboard
+    libnotify
 
     # language and tools
     gcc
@@ -208,6 +210,9 @@
     # no need to redefine it in your config for now)
     # media-session.enable = true;
   };
+
+  # enable polkit service
+  security.polkit.enable = true;
 
    # USB Automounting
   services.gvfs.enable = true;

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+VERSION="0.0.1"
+NIXCONF_DIR="${HOME}/nixconf"
+NIXER_CACHE="${HOME}/.cache/nixer"
+
+function clean {	
+	home-manager generations | tail -n +11 | cut -d' ' -f 5 | while read -r id; do 
+		home-manager remove-generations "${id}" ; 
+	done
+}
+
+function update-dots {
+	cd "${NIXCONF_DIR}" && home-manager switch --flake .
+}
+
+function update-systeme {
+	pkexec nixos-rebuild switch --flake "${NIXCONF_DIR}"
+}
+
+-v() { # version
+	echo ${VERSION}
+}
+
+ncache() {
+	[[ -d "${NIXER_CACHE}" ]] || mkdir -p "${NIXER_CACHE}"
+}
+
+if [[ -z ${1} ]]; then
+	eval "$(gum choose $(cat ${0} | grep "^function" | cut -d' ' -f 2))"
+	exit
+fi
+
+while [[ ${#} -gt 0 ]]; do 
+	${1} ; shift
+done
