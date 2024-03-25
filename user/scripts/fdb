@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 fdb_log=${HOME}/.cache/fdb
 [[ -d ${fdb_log} ]] || mkdir -p ${fdb_log}

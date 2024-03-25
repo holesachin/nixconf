@@ -17,6 +17,7 @@
 
   # Networking
   networking.hostName = "nixos"; # Define your hostname.
+  networking.enableIPv6 = false;
   networking.nameservers = [
     "8.8.8.8"
     "1.1.1.1"
@@ -48,6 +49,8 @@
     LC_TIME = "en_IN";
   };
 
+  
+
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
@@ -58,9 +61,37 @@
   users.users.sachin = {
     isNormalUser = true;
     description = "Sachin Adinath Hole";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "kvm" "input" "disk" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [];
+    packages = with pkgs; [
+      firefox
+    ];
+  };
+
+  # Console Font
+  console = {
+    packages = [ pkgs.terminus_font ] ;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-122b.psf.gz";
+  };
+
+  # Fonts Install and Setup
+  fonts = {
+    packages = with pkgs; [
+      jetbrains-mono
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      terminus-nerdfont
+      swaycons
+      (nerdfonts.override { fonts = [ "Meslo" "FiraCode" "JetBrainsMono" ]; })
+    ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = [ "Meslo LG M Regular Nerd Font Complete Mono" ];
+      };
+    };
   };
 
   users.defaultUserShell = pkgs.bash;
@@ -68,111 +99,105 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # FIXME: this is exporimental
+  # Automatically Garbage collaction
+   nix.gc.automatic = true;
+
+  # Automatically auptimize saves 25 - 35% Nix Store space
+  nix.settings.auto-optimise-store = true;
+
+  # NOTE: this is exporimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Wayfire
-  programs.wayfire.enable = true;
-  programs.wayfire.plugins = with pkgs.wayfirePlugins; [
-    wcm
-    wf-shell
-    wayfire-plugins-extra
-  ];
+  # Bspwm
+  services.xserver.windowManager.bspwm.enable = true;
+  services.xserver.windowManager.bspwm.configFile = "${pkgs.bspwm}/share/doc/bspwm/examples/bspwmrc";
+  services.xserver.windowManager.bspwm.sxhkd.configFile = "${pkgs.bspwm}/share/doc/bspwm/examples/sxhkdrc";
 
   # Hyprland
   programs.hyprland.enable = true;
-#  programs.dconf.enable = true;
- 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    home-manager # nixos
-    waybar
-    hyprpaper
-    hyprpicker
-    mako
-    xdg-utils 
-    xdg-desktop-portal-hyprland
-    lxde.lxsession
-    sddm-chili-theme
-    wl-clipboard
-    libnotify
+  programs.hyprland.xwayland.enable = true;
 
-    # language and tools
-    gcc
-    clang
-    zig
-    go
-    rustc
+  # packages
+  environment.systemPackages = with pkgs; [
+    alacritty
+    aria2
+    auto-cpufreq
+    bat
+    brightnessctl
     cargo
-    nodejs_18
-    yarn
-    stylua
+    clang
+    curl
+    fd
+    firefox
+    foot
+    fzf
+    gcc
+    git
+    glances
     gnumake
+    go
+    google-chrome
+    gparted
+    home-manager # nixos
+    htop
+    hyprpaper
+    jq
+    kitty
+    lazygit
+    lazygit
+    lf
+    libnotify
+    libsForQt5.qt5ct
+    libvirt
     luajitPackages.luarocks
+    lxde.lxsession
+    mako
+    materia-theme
+    mpc-cli
+    mpd
+    mpv
+    neovim
+    networkmanagerapplet
+    nodejs_18
+    nwg-displays
+    papirus-icon-theme
+    pass-wayland
+    pavucontrol
+    pcmanfm
+    polybar
+    pulsemixer
     python3
     python311Packages.pip
-
-    tree-sitter
-    pass-wayland
-    neovim
-    tmux
-    alacritty
-    kitty
-    foot
-    lazygit
-    curl
-    wget
-    aria2
-    lf
-    brightnessctl
-    
-    git
-    unzip
+    qemu
     ripgrep
-    fd
-
-    vscode
-    lazygit
-    firefox
-    google-chrome
-    zoom-us
-    pcmanfm
-    wofi
     rofi-wayland
-    htop
-    glances
-    pavucontrol
-    pulsemixer
-    papirus-icon-theme
-    materia-theme
-    jetbrains-mono
-    nerdfonts
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    lxappearance
-    libsForQt5.qt5ct
-#    libsForQt5.qt5.qtquickcontrols2   
-#    libsForQt5.qt5.qtgraphicaleffects
-    nwg-displays
-#    nwg-look
-    networkmanagerapplet
-    usbutils
-    fzf
-    bat
-    trash-cli
-    zoxide
-    jq
-    zsh
-    wlr-randr
+    rustc
+    sddm-chili-theme
+    smartmontools
+    softmaker-office
+    stylua
+    sxhkd
     sxiv
-    mpv
-    mpd
-    mpc-cli
+    tlp
+    tmux
+    trash-cli
+    tree-sitter
+    unzip
+    usbutils
+    virt-manager
+    vscode
+    waybar
+    wget
+    wl-clipboard
+    wlr-randr
+    wofi
+    xdg-desktop-portal-hyprland
+    xdg-utils 
+    yarn
+    zig
+    zoom-us
+    zoxide
+    zsh
   ];
 
   programs.zsh = {
@@ -216,7 +241,7 @@
 
    # USB Automounting
   services.gvfs.enable = true;
-  # services.udisks2.enable = true;
+  services.udisks2.enable = true;
   # services.devmon.enable = true;
 
   # Enable USB Guard
@@ -241,6 +266,12 @@
   # };
 
   # List services that you want to enable:
+
+  # Enable 'auto-freq' daemon
+  services.auto-cpufreq.enable = true;
+
+  # Enable 'tlp'
+  services.tlp.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

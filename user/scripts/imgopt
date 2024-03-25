@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
-#!/bin/bash
+#!/usr/bin/env bash
 # Dependancies
 # - img-optimize - https://virtubox.github.io/img-optimize/
 # - imagemagick

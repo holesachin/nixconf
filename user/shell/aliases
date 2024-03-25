@@ -1,5 +1,8 @@
+#!/usr/bin/env bash #!/usr/bin/env zsh
 
-export PATH=$PATH:${HOME}/.local/scripts
+if [[ -d ${HOME}/.local/bin ]]; then
+    export PATH=$PATH:${HOME}/.local/bin
+fi
 
 # start tmux
 if [[ -z "$TMUX" ]]; then

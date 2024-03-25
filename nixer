@@ -1,30 +1,102 @@
 #!/usr/bin/env bash
 #
+
+REPOSITORY="git@github.com:holesachin/nixconf.git" # if you use other than Github provide 'url'
+DOTFILES=""	# empty if seme as nix conf
+DOTFILES_DIR=""
+MENU="fzf --info inline-right"
+
 VERSION="0.0.1"
 NIXCONF_DIR="${HOME}/nixconf"
 NIXER_CACHE="${HOME}/.cache/nixer"
 
+DISK_USED=$(df | grep "n1p3" | awk '{print $5}' | tr -d '%')
+
+# = feature functions - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+
 function clean {	
-	home-manager generations | tail -n +11 | cut -d' ' -f 5 | while read -r id; do 
-		home-manager remove-generations "${id}" ; 
-	done
+	if [[ ${DISK_USED} -gt 70 ]]; then
+		# keep latest 11 generations and delete others
+		home-manager generations | tail -n +11 | cut -d' ' -f 5 | while read -r id; do 
+		echo "󰋞 HOME: $(home-manager remove-generations "${id}")" ; 
+		done
+
+		# keep latest 11 generations and delete others
+		echo " NIXOS: $(nix-env --delete-generations +11)"
+	fi
 }
 
+# update home-manager / user configuration
 function update-dots {
 	cd "${NIXCONF_DIR}" && home-manager switch --flake .
 }
 
+# update nixos 'system pkgs and configs'
 function update-systeme {
 	pkexec nixos-rebuild switch --flake "${NIXCONF_DIR}"
 }
+
+function edit {
+	if [[ "${TERM_PROGRAM}" == "tmux" ]]; then 
+		tmux display-popup -w 50% -h 30% -y 25% -E "gum file --file --height=13 ${NIXCONF_DIR} | xargs -I '{}' tmux neww nvim {}"
+		exit
+	fi
+
+	efile=$(find "${NIXCONF_DIR}" -type f | "${MENU}") 
+	[[ -f "${efile}" ]] && nvim "${efile}" || exit
+}
+
+function install {
+	echo 'work in progress!'
+}
+
+# = utility functuins
 
 -v() { # version
 	echo ${VERSION}
 }
 
-ncache() {
+_ncache() {
 	[[ -d "${NIXER_CACHE}" ]] || mkdir -p "${NIXER_CACHE}"
 }
+
+_isset() {
+	[[ -d "${NIXCONF_DIR}" ]] && echo true || echo false
+}
+
+_getconf() {
+	if [[ -d ${NIXCONF_DIR} ]]; then 
+		echo "[✔] ${NIXCONF_DIR} Already Exits." 
+		exit 
+	fi
+
+	if [[ "${REPOSITORY}" =~ ^(https|http|git@).*.git$ ]]; then
+		git clone "${REPOSITORY}" "${NIXCONF_DIR}" 
+	fi
+}
+
+_getdots() {
+	if [[ -d ${DOTFILES_DIR} ]]; then 
+		echo "[✔] ${DOTFILES_DIR} Already Exits." 
+		exit 
+	fi
+
+	if [[ "${DOTFILES}" =~ ^(https|http|git@).*.git$ ]]; then
+		git clone "${DOTFILES}" "${DOTFILES_DIR}" 
+	fi
+}
+
+_init() { 
+	_getconf
+}
+
+# = function calls
+
+[[ -d "${NIXCONF_DIR}" ]] && cd "${NIXCONF_DIR}" || exit 
+
+if [[ ${DISK_USED} -gt 70 ]]; then 
+	gum confirm " 💀 Delete Older Generations\ !!! " && clean
+fi
 
 if [[ -z ${1} ]]; then
 	eval "$(gum choose $(cat ${0} | grep "^function" | cut -d' ' -f 2))"

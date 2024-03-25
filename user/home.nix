@@ -4,7 +4,7 @@
   imports = [
     ../theme/theme.nix
   ];
-
+  
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "sachin";
@@ -15,10 +15,22 @@
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
+  nixpkgs.config = {
+
+    # allow unfree softwares
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     brightnessctl
+    # discord
+    foliate
+    stremio
+    nest-cli
+    newsboat
     drawio
     file
     swaybg
@@ -127,6 +139,12 @@
      source = ./wayfire;
      recursive = true;
    };
+
+   ".local/bin" = {
+    source = ./scripts;
+    recursive = true;
+   };
+   ".local/bin/nixer".source = ../nixer;
 
    # custome 'gtk' colors
 #   ".config/gtk-4.0/gtk.css".source = ../theme/gtk.css;

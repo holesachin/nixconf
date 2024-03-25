@@ -24,6 +24,7 @@
 
     # home-manager
     homeConfigurations = {
+        home-manager.useGLobarPks = true;
        sachin = home-manager.lib.homeManagerConfiguration {
          inherit pkgs;
          modules = [ ./user/home.nix ];

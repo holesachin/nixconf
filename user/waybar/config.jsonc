@@ -5,7 +5,7 @@
 "margin-bottom":0,
 "margin-top":0,
 
-"modules-left": ["sway/mode","cpu","custom/rhs","memory","network","mpd"],
+"modules-left": ["sway/mode","cpu","custom/rhs","memory","disk","network","mpd"],
 "modules-center": ["sway/workspaces","custom/search","hyprland/workspaces"],
 "modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","battery","clock"],
 
@@ -41,6 +41,15 @@ printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
     "exec": "read -rp 'name: ' nn && echo $nn",
     "return-type": "text",
     "signal": 7
+},
+
+"disk": {
+    "interval": 30,
+    "path": "/home",
+    "tooltip": true,
+    "tooltip-format": "{path}   : {used}/{free} GB.",
+	  "format": "🖴 {specific_used:0.2f} GB",
+	  "unit": "GB"
 },
 
 "battery": {
