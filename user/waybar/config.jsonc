@@ -5,9 +5,9 @@
 "margin-bottom":0,
 "margin-top":0,
 
-"modules-left": ["sway/mode","cpu","custom/rhs","memory","disk","network","mpd"],
+"modules-left": ["custom/app","wlr/taskbar","sway/mode","cpu","memory","custom/todo"],
 "modules-center": ["sway/workspaces","custom/search","hyprland/workspaces"],
-"modules-right":  ["tray","idle_inhibitor","pulseaudio","backlight","battery","clock"],
+"modules-right":  ["disk","network","pulseaudio","backlight","battery","tray","clock"],
 
 
 "custom/rhs": {
@@ -26,14 +26,13 @@
 COUNT=$(wc -l < ~/todo.txt)
 TODOS=$(cat ~/todo.txt | head -c -1 - | sed -z 's/\n/\\n/g')
 printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
-
+*/ 
 "custom/todo": {
-    "exec": "~/.config/waybar/scripts/todo.sh",
+    "format": " {} ",
     "return-type": "json",
-    "format": "{} todos",
-    "on-click": "wezterm -e nvim ~/todo.txt",
-    "interval": 5,
-},*/
+    "signal": 11,
+    "exec": "~/doit get"
+},
 
 // ref: https://man.archlinux.org/man/extra/waybar/waybar-custom.5.en
 "custom/search": {
@@ -52,21 +51,54 @@ printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
 	  "unit": "GB"
 },
 
-"battery": {
-  "states": {
-  "warning": 30,
-  "critical": 15
-  },
-  "format": "{icon} {capacity}%",
-  "format-charging": " {capacity}%",
-  "format-plugged": " {capacity}%",
-  "format-alt": "{icon} {time}",
-  "format-icons": [ " ", " ", " ", " ", " "]
+"wlr/taskbar": {
+	"format": "{icon}",
+	"icon-size": 14,
+	"icon-theme": "Numix-Circle",
+	"tooltip-format": "{title}",
+	"on-click": "activate",
+	"on-click-middle": "close",
+	"ignore-list": [
+	    "Alacritty"
+	],
+	"app_ids-mapping": {
+		"firefoxdeveloperedition": "firefox-developer-edition"
+	},
+	"rewrite": {
+		"Firefox Web Browser": "Firefox",
+		"Foot Server": "Terminal"
+	}
 },
- "custom/logo": {
-        "format": "  ",
+
+"battery": {
+    "interval": 1,
+    "states": {
+      "warning": 30,
+      "critical": 10
+    },
+    "format": "{icon} {capacity:2}%",
+    "format-icons": [
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
+    "format-time": "{H}h{m}m",
+    "format-charging": "󰂄 {capacity}%",
+    "format-warning": "{icon} {capacity:2}%",
+    "format-critical": "{icon} {capacity:2}%",
+    "tooltip": false
+},
+ "custom/app": {
+        "format": " ",
         "tooltip": false,
-        "on-click": "rofi -show drun &"
+        "on-click": "rofi -show drun -show-icons --replace &"
     },
 "hyprland/workspaces": {
   "on-click": "activate",

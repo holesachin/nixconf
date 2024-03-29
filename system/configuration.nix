@@ -185,7 +185,6 @@
     unzip
     usbutils
     virt-manager
-    vscode
     waybar
     wget
     wl-clipboard
@@ -265,10 +264,16 @@
   #   enableSSHSupport = true;
   # };
 
+  # setup mpd
+  services.mpd.enable = true;
+
   # List services that you want to enable:
 
+  # Enable swaylock
+  security.pam.services.swaylock = {}; 
+
   # Enable 'auto-freq' daemon
-  services.auto-cpufreq.enable = true;
+  # services.auto-cpufreq.enable = true;
 
   # Enable 'tlp'
   services.tlp.enable = true;

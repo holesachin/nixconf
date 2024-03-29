@@ -23,7 +23,7 @@ datestr=%a, %e of %B
 image=~/.config/bg2.png
 
 # Fade in time
-fade-in=1
+fade-in=0
 
 # Effect for background
 effect-blur=10x2
@@ -34,7 +34,7 @@ effect-blur=10x2
 indicator
 
 # smaller indicator
-indicator-radius=100
+indicator-radius=70
 
 # bigger indicator
 # indicator-radius=300

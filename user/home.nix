@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -22,22 +22,45 @@
     allowUnfreePredicate = (_: true);
   };
 
+  xdg.userDirs.enable = true;
+  xdg.userDirs.createDirectories = true;
+  xdg.userDirs = {
+    music       = "${config.home.homeDirectory}/music";
+    videos      = "${config.home.homeDirectory}/videos";
+    documents   = "${config.home.homeDirectory}/docs";
+    download    = "${config.home.homeDirectory}/download";
+    publicShare = "${config.home.homeDirectory}/public";
+    templates   = "${config.home.homeDirectory}/templates";
+    pictures    = "${config.home.homeDirectory}/pix";
+    desktop     = "${config.home.homeDirectory}/desktop";
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    bat
     brightnessctl
-    # discord
+    bun
+    discord
+    drawio
+    fastfetch
+    file
     foliate
-    stremio
+    freshfetch
+    glow
+    gum
+    gh
     nest-cli
     newsboat
-    drawio
-    file
+    pulsemixer
+    stremio
+    swaylock-effects
+    swaylock-fancy
     swaybg
-    gum
-    glow
-    bat
+    vscode
+    yt-dlp
   ];
+
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -146,6 +169,11 @@
    };
    ".local/bin/nixer".source = ../nixer;
 
+   ".config/swaylock" = {
+    source = ./swaylock;
+    recursive = true;
+   };
+
    # custome 'gtk' colors
 #   ".config/gtk-4.0/gtk.css".source = ../theme/gtk.css;
 #   ".config/gtk-3.0/gtk.css".source = ../theme/gtk.css;
@@ -155,6 +183,12 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  # enable swayidle
+  services.swayidle.enable = true;
+  services.swayidle.timeouts = [
+    { timeout = 11; command = "${pkgs.swaylock}/bin/swaylock -fF"; }
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

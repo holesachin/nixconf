@@ -28,6 +28,7 @@ alias del='/bin/rm -rf'
 # alias lf='lfub'
 alias bin='$HOME/.local/bin'
 
+alias clr='clear'
 alias cat='bat -p'
 
 # vim == nvim
