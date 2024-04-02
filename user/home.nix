@@ -1,5 +1,7 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, pkgs-unstable, ... }:
+let 
+  nvim-config = "default";
+in
 {
   imports = [
     ../theme/theme.nix
@@ -37,7 +39,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     bat
     brightnessctl
     bun
@@ -52,14 +54,23 @@
     gh
     nest-cli
     newsboat
+    nodePackages.pnpm
+    nwg-displays
+    prisma-engines
     pulsemixer
+    pkg-config
+    rclone
     stremio
     swaylock-effects
     swaylock-fancy
     swaybg
     vscode
     yt-dlp
-  ];
+  ])
+  ++
+  (with pkgs-unstable; [
+    hyprshot
+  ]);
 
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -68,10 +79,10 @@
    ".bashrc".source = ./bash/bashrc;
    ".zshrc".source = ./zsh/zshrc;
    
-   ".config/nvim" = {
-     source = ./nvim;
-     recursive = true;
-   };
+  # ".config/nvim" = {
+  #   source = ./nvim/${nvim-config};
+  #   recursive = true;
+  # };
 
     # kitty
    ".config/kitty" = {

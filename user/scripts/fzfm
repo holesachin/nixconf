@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+[[ -z ${1} ]] && _path="./" || _path="${1}"
+
+while true; do 
+  CMD=$(du --all ${_path} | awk '{print $2}' | fzf --print-query \
+    --preview='bat -pn {}' --preview-window='up' \
+    --border --info="inline-right" \
+    --prompt="📂𝡻 " \
+    ); 
+  case ${CMD} in
+    :exit|:quit|:q|:q!) exit ;;
+    :edit) nvim ${0}         ;;
+  esac
+    [[ ${CMD} =~ ${_path} ]] && nvim ${CMD} 
+done

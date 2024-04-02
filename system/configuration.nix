@@ -264,6 +264,16 @@
   #   enableSSHSupport = true;
   # };
 
+  # finger print unlock
+  # services.fprintd.enable = true;
+  # services.fprintd.tod.enable = true;
+  # security.pam.services.login.fprintAuth = true; 
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  # vnstat ( bandwidth usage )
+  services.vnstat.enable = true;
+
   # setup mpd
   services.mpd.enable = true;
 
@@ -273,10 +283,10 @@
   security.pam.services.swaylock = {}; 
 
   # Enable 'auto-freq' daemon
-  # services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.enable = true;
 
   # Enable 'tlp'
-  services.tlp.enable = true;
+  # services.tlp.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

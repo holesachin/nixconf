@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 export SDL_VIDEODRIVER=wayland
 export MOZ_ENABLE_WAYLAND=1
@@ -19,7 +19,7 @@ export SAL_USE_VCLPLUGIN=gtk
 export SSH_ASKPASS=torios-askpass  # zenity dialog for ssh
 export SUDO_ASKPASS=torios-askpass # zenity dialog for sudo -A
 
-# wayland fix
+# wayland QT fix
 export QT_QPA_PLATFORM=wayland
 export QT_QPA_PLATFORMTHEME=qt5ct # qt5ct # kvantum
 
