@@ -2,8 +2,8 @@
 
 export SDL_VIDEODRIVER=wayland
 export MOZ_ENABLE_WAYLAND=1
-#export GTK_THEME=materia:dark
-#export QT_STYLE_OVERRIDE=adwaita-dark
+export GTK_THEME=materia:dark
+export QT_STYLE_OVERRIDE=adwaita-dark
 
 export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_CLASS=user
@@ -25,7 +25,7 @@ export QT_QPA_PLATFORMTHEME=qt5ct # qt5ct # kvantum
 
 # defaults
 export EDITOR=nvim
-export TERMINAL=alacritty
+export TERMINAL=kitty
 export BROWSER=firefox
 export DOTS=~/.local/mydots
 export SUDO_ASKPASS=~/.local/bin/mypass
@@ -47,3 +47,4 @@ export XDG_VIDEOS_DIR="$HOME/videos"
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 exec Hyprland
+exec swaylock -fF

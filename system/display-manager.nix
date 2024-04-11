@@ -7,6 +7,7 @@ services.greetd = {
   settings = rec {
     initial_session = {
       command = "${pkgs.hyprland}/bin/Hyprland";
+      #command = "/home/sachin/.config/hypr/hyprstart";
       user = "sachin";
     };
     default_session = initial_session;

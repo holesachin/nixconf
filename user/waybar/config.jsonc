@@ -28,10 +28,15 @@ TODOS=$(cat ~/todo.txt | head -c -1 - | sed -z 's/\n/\\n/g')
 printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
 */ 
 "custom/todo": {
-    "format": " {} ",
-    "return-type": "json",
-    "signal": 11,
-    "exec": "~/doit get"
+    "format": "  {} ",
+    "return-type": "text",
+    "exec": "~/waylist",
+    "on-click": "kitty -e $(~/update-waylist select)",
+    "on-scroll-up": "~/update-waylist next",
+    "on-scroll-down": "~/update-waylist prev",
+    "max-length": 100,
+    "tooltip": false,
+    "signal": 11
 },
 
 // ref: https://man.archlinux.org/man/extra/waybar/waybar-custom.5.en
@@ -127,6 +132,7 @@ printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
 },
 "clock": {
     "locale": "C", 
+    "tooltip": "(cal)",
     "format": " {:%I:%M %p}",
     "format-alt": " {:%a,%b %d}" // Icon: calendar-alt
 },

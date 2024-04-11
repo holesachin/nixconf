@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+if [[ ${1} =~ ^- ]]; then 
+  _opt=${1} ; shift 
+fi
+
 [[ -z ${1} ]] && _path="./" || _path="${1}"
 
 while true; do 
-  CMD=$(du --all ${_path} | awk '{print $2}' | fzf --print-query \
+  CMD=$(find ${_path} -type f | awk '{print $2}' | fzf --print-query \
     --preview='bat -pn {}' --preview-window='up' \
     --border --info="inline-right" \
     --prompt="📂𝡻 " \
@@ -12,5 +16,12 @@ while true; do
     :exit|:quit|:q|:q!) exit ;;
     :edit) nvim ${0}         ;;
   esac
-    [[ ${CMD} =~ ${_path} ]] && nvim ${CMD} 
+
+  if [[ ${CMD} =~ ${_path} ]]; then 
+    [[ ${TERM_PROGRAM} == "tmux" ]] && tmux neww nvim ${CMD} || nvim ${CMD}
+  fi
+
+  case ${_opt} in
+    '--quit') exit    ;;
+  esac
 done

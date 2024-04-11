@@ -35,6 +35,11 @@ cmd exec %exec "$f"
 # choose program to open "$f" in
 cmd runner ${{ "$1" "$f"  }}
 
+# seacrh file
+cmd file_search ${{ 
+  exec ~/.config/lf/scripts/file-search.sh "$f"
+}}
+
 # set wallpaper
 cmd setwallpaper %cp "$f" ~/.config/bg.png && feh --no-fehbg --bg-scale "$f"
 
@@ -113,6 +118,7 @@ map C clear                                  # Clear
 map au unarchive                             # Extract archieve files
 map ac carchive                              # Create Archive
 map ex exec                                  # Run scripts
+map sf file_search                           # fzf file search
 
 map mf push :mkfile<space>                   # Create new File 
 map md push :mkdir<space>                    # Create new Directory 

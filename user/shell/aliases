@@ -7,11 +7,12 @@ fi
 # start tmux
 if [[ -z "$TMUX" ]]; then
     tmux -u attach -t nix >/dev/null || tmux -u new -s nix 
+    exit
 fi
 
 # eniviroment variables = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 export EDITOR='nvim'
-
+export BROWSER='firefox -kiosk -new-window'
 
 # android studio
 # export ANDROID_HOME=$HOME/Android/Sdk

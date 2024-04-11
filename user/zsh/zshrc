@@ -33,7 +33,7 @@ bindkey "^F" "lf"
 
 # prompt
 #PS1="%F{#42A5F5} %F{#CBA6F7}%1d%F{#F9E2AF}  %f"  # arch
-PS1="%F{#42A5F5} %F{#CBA6F7}%1d%F{#F9E2AF}  %f"  # nixos
+PS1="%F{#42A5F5} %F{#CBA6F7}%F{#F9E2AF}  %f"  # nixos
 
 alias fireapp='firefox -kiosk -new-window'
 

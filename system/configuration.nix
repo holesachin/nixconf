@@ -15,6 +15,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # disable all kernal messages while boot
+  boot.kernelParams = ["quiet"];
+
+  # Plymouth
+  boot.plymouth.enable = true;
+  boot.plymouth.theme = "breeze";
+  boot.plymouth.logo = "${pkgs.nixos-icons}/share/icons/hicolor/128x128/apps/nix-snowflake.png";
+
+
   # Networking
   networking.hostName = "nixos"; # Define your hostname.
   networking.enableIPv6 = false;
@@ -117,11 +126,17 @@
   programs.hyprland.enable = true;
   programs.hyprland.xwayland.enable = true;
 
+  # Sway
+  #programs.sway.enable = true;
+  #programs.sway.wrapperFeatures.gtk = true;
+
+
   # packages
   environment.systemPackages = with pkgs; [
     alacritty
     aria2
     auto-cpufreq
+    android-tools
     bat
     brightnessctl
     cargo
@@ -171,7 +186,6 @@
     qemu
     ripgrep
     rofi-wayland
-    rustc
     sddm-chili-theme
     smartmontools
     softmaker-office
@@ -185,6 +199,7 @@
     unzip
     usbutils
     virt-manager
+    vim
     waybar
     wget
     wl-clipboard

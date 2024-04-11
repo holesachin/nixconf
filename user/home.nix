@@ -12,6 +12,17 @@ in
   home.username = "sachin";
   home.homeDirectory = "/home/sachin";
 
+  #  programss.git = {
+  #    enable = true;
+  #    userName = "holesachin";
+  #    userEmail = "user@gmail.com";
+  #  };
+
+  # Sway
+  wayland.windowManager.sway.enable = true;
+  wayland.windowManager.sway.xwayland = true;
+
+
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
@@ -23,7 +34,7 @@ in
     allowUnfree = true;
     allowUnfreePredicate = (_: true);
   };
-
+  
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
   xdg.userDirs = {
@@ -40,6 +51,7 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = (with pkgs; [
+    android-studio
     bat
     brightnessctl
     bun
@@ -47,7 +59,6 @@ in
     drawio
     fastfetch
     file
-    foliate
     freshfetch
     glow
     gum
@@ -56,20 +67,31 @@ in
     newsboat
     nodePackages.pnpm
     nwg-displays
+    nomacs
     prisma-engines
     pulsemixer
     pkg-config
     rclone
+    rustup
     stremio
     swaylock-effects
     swaylock-fancy
     swaybg
+    scrcpy
+    sxiv
+    zathura
     vscode
     yt-dlp
+    ytfzf
   ])
   ++
   (with pkgs-unstable; [
+    hyprland
+    hyprlock
+    hypridle
     hyprshot
+    hyprpicker
+    foliate
   ]);
 
 

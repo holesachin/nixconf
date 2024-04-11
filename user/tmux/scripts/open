@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+funtion fzfm() {
+  CHOICE=`fd --type f . ${1} | fzf-tmux --info right-inline` 
+  nvim ${CHOICE}
+}
+
+${1} ${2} ${3}
