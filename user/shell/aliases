@@ -5,10 +5,10 @@ if [[ -d ${HOME}/.local/bin ]]; then
 fi
 
 # start tmux
-if [[ -z "$TMUX" ]]; then
-    tmux -u attach -t nix >/dev/null || tmux -u new -s nix 
-    exit
-fi
+#if [[ -z "$TMUX" ]]; then
+#    tmux -u attach -t nix >/dev/null || tmux -u new -s nix 
+#    exit
+#fi
 
 # eniviroment variables = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 export EDITOR='nvim'
@@ -44,6 +44,8 @@ alias listdir="ls -d */ > list"
 
 alias aria2cd='aria2c -c -s 11 -x 11 -k 1M -j 11 '
 
+alias cd='z'
+
 # copy with rsync
 alias rcp='rsync -a --progress'
 
@@ -52,26 +54,15 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# scan wifi 
-swifi() { 
-    nmcli device wifi rescan && nmcli device wifi list 
-}
-
-cwifi() {
-     if [ ${*} ] ; then
-        nmcli device wifi connect "${*}"
-    else
-        nmcli device wifi connect $(swifi | tail -n +2 |  gum choose | tr '*' ' ' | awk '{print $2}')
-    fi
-}
-
 # short functions
-
+# find dotfiles
+fdf() {
+    _file=$(fd . ~/nixconf | sed 's#'"${HOME}"'#~#g' | fzf-tmux --info inline-right | sed 's#^\~#'"$HOME"'#g')
+    tmux neww nvim ${_file}
+}
 # Create and go to the directory
-mkdirg ()
-{
-    mkdir -p $1
-    cd $1
+mkdirg() {
+    mkdir -p $1 && cd $1
 }
 
 # vim switcher
@@ -100,6 +91,3 @@ mkdirg ()
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # key bindings
-
-bindkey -s ^n "nvim\n"
-

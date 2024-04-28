@@ -95,7 +95,8 @@ _init() {
 [[ -d "${NIXCONF_DIR}" ]] && cd "${NIXCONF_DIR}" || exit 
 
 if [[ ${DISK_USED} -gt 70 ]]; then 
-	gum confirm " 💀 Delete Older Generations\ !!! " && clean
+  echo "!! !!"
+	#gum confirm " 💀 Delete Older Generations\ !!! " && clean
 fi
 
 if [[ -z ${1} ]]; then

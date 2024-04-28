@@ -1,0 +1,30 @@
+;paint.net Palette File
+;Downloaded from Lospec.com/palette-list
+;Palette Name: Tokyo Night
+;Description: The Tokyo Night Palette, as from <a href="https://github.com/folke/tokyonight.nvim" target="_blank">folke/tokyonight.nvim on Github</a>. A beautiful combo of dark blues and vivid neons, inspired by the beautiful city of Tokyo at night.<br>
+;Colors: 25
+FF1f2335
+FF24283b
+FF292e42
+FF3b4261
+FF414868
+FF545c7e
+FF565f89
+FF737aa2
+FFa9b1d6
+FFc0caf5
+FF394b70
+FF3d59a1
+FF7aa2f7
+FF7dcfff
+FFb4f9f8
+FFbb9af7
+FF9d7cd8
+FFff9e64
+FFffc777
+FFc3e88d
+FF4fd6be
+FF41a6b5
+FFff757f
+FFc53b53
+FFff007c

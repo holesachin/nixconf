@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   imports =
@@ -14,9 +14,16 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 3;
 
   # disable all kernal messages while boot
   boot.kernelParams = ["quiet"];
+    boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback
+  ];
+  boot.extraModprobeConfig = ''
+    options v4l2loopback devices=1 video_nr=1 card_label="OBS_CAMERA" exclusive_caps=1
+  '';
 
   # Plymouth
   boot.plymouth.enable = true;
@@ -62,15 +69,15 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sachin = {
     isNormalUser = true;
     description = "Sachin Adinath Hole";
-    extraGroups = [ "networkmanager" "wheel" "kvm" "input" "disk" ];
+    extraGroups = [ "networkmanager" "wheel" "kvm" "input" "disk" "docker" "libvirtd" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
@@ -103,18 +110,26 @@
     };
   };
 
+  # docker
+  virtualisation.docker.enable = true;
+  virtualisation.docker.storageDriver = "btrfs";
+
+  # virt-manager
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   users.defaultUserShell = pkgs.bash;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # Automatically Garbage collaction
-   nix.gc.automatic = true;
+  nix.gc.automatic = true;
 
   # Automatically auptimize saves 25 - 35% Nix Store space
   nix.settings.auto-optimise-store = true;
 
-  # NOTE: this is exporimental
+  #  NOTE: this is exporimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bspwm
@@ -130,6 +145,9 @@
   #programs.sway.enable = true;
   #programs.sway.wrapperFeatures.gtk = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+  ];
 
   # packages
   environment.systemPackages = with pkgs; [
@@ -139,7 +157,6 @@
     android-tools
     bat
     brightnessctl
-    cargo
     clang
     curl
     fd
@@ -153,7 +170,6 @@
     go
     google-chrome
     gparted
-    home-manager # nixos
     htop
     hyprpaper
     jq
@@ -188,10 +204,11 @@
     rofi-wayland
     sddm-chili-theme
     smartmontools
-    softmaker-office
     stylua
     sxhkd
+    softmaker-office
     sxiv
+    sublime4
     tlp
     tmux
     trash-cli
@@ -209,9 +226,9 @@
     xdg-utils 
     yarn
     zig
-    zoom-us
     zoxide
     zsh
+    zoom-us
   ];
 
   programs.zsh = {
@@ -285,6 +302,21 @@
   # security.pam.services.login.fprintAuth = true; 
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-vfs0090;
   # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  # postgres
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type   database        DBuser          Address                 auth-method
+      local   all             all                                     trust
+      host    all             all             127.0.0.1/32            trust
+    '';
+  };
+
+  # syncthing
+  # services.syncthing.enable = true;
+  # services.syncthing.user = "sachin";
 
   # vnstat ( bandwidth usage )
   services.vnstat.enable = true;

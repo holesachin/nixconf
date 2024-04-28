@@ -2,17 +2,17 @@
 size = 10
 
 [font.bold]
-family = "{{term_font}}"
+family = "Jetbrains Mono"
 style = "Bold"
 
 [font.bold_italic]
-family = "{{term_font}}"
+family = "Jetbrains Mono"
 style = "Bold Italic"
 
 [font.italic]
-family = "{{term_font}}"
+family = "Jetbrains Mono"
 style = "Italic"
 
 [font.normal]
-family = "{{term_font}}"
+family = "Jetbrains Mono"
 style = "Regular"

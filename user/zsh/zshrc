@@ -1,35 +1,16 @@
-# zap   : https://github.com/zap-zsh/zap
-# site  : https://zapzsh.org
-# yt    : https://youtu.be/LhDMw6n3GI4?si=Jl0aOM3faxEHkE5p
 
-# load zap installer
-[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-#if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ]; then  
-  #  source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-#fi
+# start tmux
+if [[ -z "$TMUX" ]]; then
+    tmux -u attach -t nix >/dev/null || tmux -u new -s nix 
+    exit
+fi
 
-# load aliases
+# load 
 [ -f "${HOME}/.config/shell/aliases" ] && source "${HOME}/.config/shell/aliases"
-
-# zap alias
-alias zapw='echo https://zapzsh.org'
-alias zapsrc='echo https://github.com/zap-zsh/zap'
-alias zaprc="vim ${HOME}/.zshrc"
-alias zshrc="vim ${HOME}/.zshrc"
-
-# plugins
-plug "zap-zsh/supercharge"
-plug "zap-zsh/sudo"
-plug "zsh-users/zsh-autosuggestions"
-plug "zsh-users/zsh-syntax-highlighting"
-plug "MichaelAquilina/zsh-you-should-use"
 
 # load and initialise completion system
 autoload -Uz compinit
 compinit
-
-# key bindigs
-bindkey "^F" "lf"
 
 # prompt
 #PS1="%F{#42A5F5} %F{#CBA6F7}%1d%F{#F9E2AF}  %f"  # arch
@@ -45,5 +26,3 @@ alias kali='ssh sachin@192.168.122.148'
 
 # zoxide
 eval "$(zoxide init zsh)"
-
-PATH=~/.console-ninja/.bin:$PATH

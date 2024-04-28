@@ -1,239 +1,256 @@
 {
-"layer": "top",
-"position": "top",
-"height": 10,
-"margin-bottom":0,
-"margin-top":0,
-
-"modules-left": ["custom/app","wlr/taskbar","sway/mode","cpu","memory","custom/todo"],
-"modules-center": ["sway/workspaces","custom/search","hyprland/workspaces"],
-"modules-right":  ["disk","network","pulseaudio","backlight","battery","tray","clock"],
-
-
-"custom/rhs": {
-    "format": "",
-    "interval": "once",
-    "tooltip": false
-},
-"custom/lhs": {
-    "format": "",
-    "interval": "once",
-    "tooltip": false
-},
-
-/*
+	"layer": "top",
+	"position": "top",
+	"height": 10,
+	"margin-bottom": 0,
+	"margin-top": 0,
+	"modules-left": [
+		"custom/app",
+		"hyprland/workspaces",
+		"sway/mode",
+		"cpu",
+		"memory",
+		"custom/todo"
+	],
+	"modules-center": [
+		"sway/workspaces",
+		"custom/search"
+	],
+	"modules-right": [
+		"disk",
+		"network",
+		"pulseaudio",
+		"backlight",
+		"battery",
+		"tray",
+		"clock"
+	],
+	"custom/rhs": {
+		"format": "",
+		"interval": "once",
+		"tooltip": false
+	},
+	"custom/lhs": {
+		"format": "",
+		"interval": "once",
+		"tooltip": false
+	},
+	/*
 #!/bin/bash
 COUNT=$(wc -l < ~/todo.txt)
 TODOS=$(cat ~/todo.txt | head -c -1 - | sed -z 's/\n/\\n/g')
 printf '{"text": "%s", "tooltip": "%s"}\n' "$COUNT" "$TODOS"
-*/ 
-"custom/todo": {
-    "format": "  {} ",
-    "return-type": "text",
-    "exec": "~/waylist",
-    "on-click": "kitty -e $(~/update-waylist select)",
-    "on-scroll-up": "~/update-waylist next",
-    "on-scroll-down": "~/update-waylist prev",
-    "max-length": 100,
-    "tooltip": false,
-    "signal": 11
-},
-
-// ref: https://man.archlinux.org/man/extra/waybar/waybar-custom.5.en
-"custom/search": {
-    "format": " {} ",
-    "exec": "read -rp 'name: ' nn && echo $nn",
-    "return-type": "text",
-    "signal": 7
-},
-
-"disk": {
-    "interval": 30,
-    "path": "/home",
-    "tooltip": true,
-    "tooltip-format": "{path}   : {used}/{free} GB.",
-	  "format": "🖴 {specific_used:0.2f} GB",
-	  "unit": "GB"
-},
-
-"wlr/taskbar": {
-	"format": "{icon}",
-	"icon-size": 14,
-	"icon-theme": "Numix-Circle",
-	"tooltip-format": "{title}",
-	"on-click": "activate",
-	"on-click-middle": "close",
-	"ignore-list": [
-	    "Alacritty"
-	],
-	"app_ids-mapping": {
-		"firefoxdeveloperedition": "firefox-developer-edition"
+*/
+	"custom/todo": {
+		"format": "🟐 {} ",
+		"return-type": "text",
+		"exec": "~/exp/nquick show",
+		"on-click": "~/exp/nquick sort",
+		"tooltip": false,
+		"signal": 11
 	},
-	"rewrite": {
-		"Firefox Web Browser": "Firefox",
-		"Foot Server": "Terminal"
+	// ref: https://man.archlinux.org/man/extra/waybar/waybar-custom.5.en
+	"custom/search": {
+		"format": " {} ",
+		"exec": "read -rp 'name: ' nn && echo $nn",
+		"return-type": "text",
+		"signal": 7
+	},
+	"disk": {
+		"interval": 30,
+		"path": "/home",
+		"tooltip": true,
+		"tooltip-format": "{path}   : {used}/{free} GB.",
+		"format": "🖴 {specific_used:0.2f} GB",
+		"unit": "GB"
+	},
+	"wlr/taskbar": {
+		"format": "{icon}",
+		"icon-size": 14,
+		"icon-theme": "Numix-Circle",
+		"tooltip-format": "{title}",
+		"on-click": "activate",
+		"on-click-middle": "close",
+		"ignore-list": [
+			"Alacritty"
+		],
+		"app_ids-mapping": {
+			"firefoxdeveloperedition": "firefox-developer-edition"
+		},
+		"rewrite": {
+			"Firefox Web Browser": "Firefox",
+			"Foot Server": "Terminal"
+		}
+	},
+	"battery": {
+		"interval": 1,
+		"states": {
+			"warning": 30,
+			"critical": 10
+		},
+		"format": "{icon} {capacity:2}%",
+		"format-icons": [
+			"󰁺",
+			"󰁻",
+			"󰁼",
+			"󰁽",
+			"󰁾",
+			"󰁿",
+			"󰂀",
+			"󰂁",
+			"󰂂",
+			"󰁹"
+		],
+		"format-time": "{H}h{m}m",
+		"format-charging": "󰂄 {capacity}%",
+		"format-warning": "{icon} {capacity:2}%",
+		"format-critical": "{icon} {capacity:2}%",
+		"tooltip": false
+	},
+	"custom/app": {
+		"format": " ",
+		"tooltip": false,
+		"on-click": "rofi -show drun -show-icons --replace &"
+	},
+	"hyprland/workspaces": {
+		"on-click": "activate",
+		"format": "{icon}",
+		"format-icons": {
+			"default": "",
+			"active": "",
+			"urgent": "✶"
+		},
+		"persistent_workspaces": {
+			"1": [],
+			"2": [],
+			"3": []
+		}
+	},
+	"hyprland/window": {
+		"max-length": 200,
+		"separate-outputs": true
+	},
+	"sway/mode": {
+		"format": "<span style=\"italic\">{}</span>"
+	},
+	"tray": {
+		"icon-size": 11,
+		"spacing": 6
+	},
+	"clock": {
+		"locale": "C",
+		"tooltip": "(cal)",
+		"format": " {:%I:%M %p}",
+		"format-alt": " {:%a,%b %d}" // Icon: calendar-alt
+	},
+	"cpu": {
+		"format": " {usage}%",
+		"tooltip": false,
+		"on-click": "kitty -e 'glances'"
+	},
+	"memory": {
+		"interval": 30,
+		"format": "󰍛 {used:0.2f}GB",
+		"max-length": 10,
+		"tooltip": false,
+		"warning": 70,
+		"critical": 90
+	},
+	"network": {
+		"interval": 2,
+		"format": "󰓅 {bandwidthTotalBytes}",
+		"tooltip-format": "󰶹 {bandwidthDownBytes}   󰶼 {bandwidthUpBytes}",
+		"format-ethernet": "󰛳",
+		"format-linked": " {ipaddr}",
+		"format-disconnected": "󰖪",
+		"format-disabled": "",
+		"max-length": 20,
+		"min-length": 6,
+		"format-alt": "{essid}"
+	},
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": " ",
+			"deactivated": " "
+		}
+	},
+	"backlight": {
+		// "device": "acpi_video1",
+		"format": "{icon} {percent}%",
+		"format-icons": [
+			"",
+			"󰃞",
+			"󰃟",
+			"󰃠",
+			"🔆"
+		],
+		"on-scroll-down": "brightnessctl -c backlight set 1%-",
+		"on-scroll-up": "brightnessctl -c backlight set +1%"
+	},
+	"pulseaudio": {
+		// "scroll-step": 1, // %, can be a float
+		"format": "{icon} {volume}% {format_source}",
+		"format-bluetooth": "{icon} {volume}% {format_source}",
+		"format-bluetooth-muted": " {format_source}",
+		"format-muted": "  {format_source}",
+		"format-source": " {volume}%",
+		"format-source-muted": "",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "🎧",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": [
+				"",
+				"",
+				""
+			]
+		},
+		"on-click": "pavucontrol"
+	},
+	"mpd": {
+		"format": "{stateIcon} {artist} - {title}",
+		"format-disconnected": "🎶",
+		"format-stopped": "♪",
+		"interval": 10,
+		"consume-icons": {
+			"on": " " // Icon shows only when "consume" is on
+		},
+		"random-icons": {
+			"off": "<span color=\"#f53c3c\"></span> ", // Icon grayed out when "random" is off
+			"on": " "
+		},
+		"repeat-icons": {
+			"on": " "
+		},
+		"single-icons": {
+			"on": "1 "
+		},
+		"state-icons": {
+			"paused": "",
+			"playing": ""
+		},
+		"tooltip-format": "MPD (connected)",
+		"tooltip-format-disconnected": "MPD (disconnected)",
+		"max-length": 35
+	},
+	"custom/recorder": {
+		"format": " Rec",
+		"format-disabled": " Off-air", //An empty format will hide the module.
+		"return-type": "json",
+		"interval": 1,
+		"exec": "echo '{\"class\": \"recording\"}'",
+		"exec-if": "pgrep wf-recorder"
+	},
+	"custom/audiorec": {
+		"format": "♬ Rec",
+		"format-disabled": "♬ Off-air", //An empty format will hide the module.
+		"return-type": "json",
+		"interval": 1,
+		"exec": "echo '{\"class\": \"audio recording\"}'",
+		"exec-if": "pgrep ffmpeg"
 	}
-},
-
-"battery": {
-    "interval": 1,
-    "states": {
-      "warning": 30,
-      "critical": 10
-    },
-    "format": "{icon} {capacity:2}%",
-    "format-icons": [
-      "󰁺",
-      "󰁻",
-      "󰁼",
-      "󰁽",
-      "󰁾",
-      "󰁿",
-      "󰂀",
-      "󰂁",
-      "󰂂",
-      "󰁹"
-    ],
-    "format-time": "{H}h{m}m",
-    "format-charging": "󰂄 {capacity}%",
-    "format-warning": "{icon} {capacity:2}%",
-    "format-critical": "{icon} {capacity:2}%",
-    "tooltip": false
-},
- "custom/app": {
-        "format": " ",
-        "tooltip": false,
-        "on-click": "rofi -show drun -show-icons --replace &"
-    },
-"hyprland/workspaces": {
-  "on-click": "activate",
-        "format": "{icon}",
-        "format-icons": {
-            "default": "",
-            "active": "",
-            "urgent": "✶"
-        },
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": []
-        }
-},
-"hyprland/window": {
-    "max-length": 200,
-    "separate-outputs": true
-},
-"sway/mode": {
-    "format": "<span style=\"italic\">{}</span>"
-},
-"tray": {
-    "icon-size": 11,
-    "spacing": 6
-},
-"clock": {
-    "locale": "C", 
-    "tooltip": "(cal)",
-    "format": " {:%I:%M %p}",
-    "format-alt": " {:%a,%b %d}" // Icon: calendar-alt
-},
-"cpu": {
-    "format": " {usage}%",
-    "tooltip": false,
-    "on-click": "kitty -e 'glances'"
-},
-"memory": {
-    "interval": 30,
-    "format": "󰍛 {used:0.2f}GB",
-    "max-length": 10,
-    "tooltip": false,
-    "warning": 70,
-    "critical": 90
-},
-"network": {
-  "interval": 2,
-  "format": "󰓅 {bandwidthTotalBytes}",
-  "tooltip-format": "󰶹 {bandwidthDownBytes}   󰶼 {bandwidthUpBytes}",
-  "format-ethernet": "󰛳",
-  "format-linked": " {ipaddr}",
-  "format-disconnected": "󰖪",
-  "format-disabled": "",
-  "max-length": 20,
-  "min-length": 6,
-  "format-alt": "{essid}",
-},
-"idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-        "activated": " ",
-        "deactivated": " "
-    }
-},
-"backlight": {
-    // "device": "acpi_video1",
-    "format": "{icon} {percent}%",
-    "format-icons": ["", "󰃞", "󰃟", "󰃠", "🔆" ],
-    "on-scroll-down": "brightnessctl -c backlight set 1%-",
-    "on-scroll-up": "brightnessctl -c backlight set +1%"
-},
-"pulseaudio": {
-  // "scroll-step": 1, // %, can be a float
-  "format": "{icon} {volume}% {format_source}",
-  "format-bluetooth": "{icon} {volume}% {format_source}",
-  "format-bluetooth-muted": " {format_source}",
-  "format-muted": "  {format_source}",
-  "format-source": " {volume}%",
-  "format-source-muted": "",
-  "format-icons": {
-    "headphone": "",
-    "hands-free": "",
-    "headset": "🎧",
-    "phone": "",
-    "portable": "",
-    "car": "",
-    "default": ["", "", ""]
-  },
-  "on-click": "pavucontrol"
-},
-"mpd": {
-  "format": "{stateIcon} {artist} - {title}",
-  "format-disconnected": "🎶",
-  "format-stopped": "♪",
-  "interval": 10,
-  "consume-icons": {
-    "on": " " // Icon shows only when "consume" is on
-  },
-  "random-icons": {
-    "off": "<span color=\"#f53c3c\"></span> ", // Icon grayed out when "random" is off
-    "on": " "
-  },
-  "repeat-icons": {
-    "on": " "
-  },
-  "single-icons": {
-    "on": "1 "
-  },
-  "state-icons": {
-    "paused": "",
-    "playing": ""
-  },
-  "tooltip-format": "MPD (connected)",
-  "tooltip-format-disconnected": "MPD (disconnected)",
-  "max-length": 35
-},
-"custom/recorder": {
-    "format": " Rec",
-    "format-disabled": " Off-air", //An empty format will hide the module.
-    "return-type": "json",
-    "interval": 1,
-    "exec": "echo '{\"class\": \"recording\"}'",
-    "exec-if": "pgrep wf-recorder",
-},
-"custom/audiorec": {
-    "format": "♬ Rec",
-    "format-disabled": "♬ Off-air", //An empty format will hide the module.
-    "return-type": "json",
-    "interval": 1,
-    "exec": "echo '{\"class\": \"audio recording\"}'",
-    "exec-if": "pgrep ffmpeg",
-},
 }
